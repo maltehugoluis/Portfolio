@@ -6,6 +6,9 @@ import Camera from './camera';
 export default function CameraScene({ onSelect }) {
   const controlsRef = useRef();
 
+  // Check für mobile Endgeräte (schmaler als 768px)
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
   return (
     <div className="canvas-container">
       {/* Dein Branding oben links */}
@@ -20,13 +23,23 @@ export default function CameraScene({ onSelect }) {
         <Environment preset="city" />
         
         <Suspense fallback={null}>
-          <OrbitControls ref={controlsRef} enablePan={false} 
-          // ZOOM-LIMITS (Beispielwerte basierend auf 20%)
-            minDistance={4}   // Verhindert zu nahes Heranzoomen
-            maxDistance={8}   // Verhindert zu weites Wegzoomen
-  />
-          {/* HIER ist der wichtige Punkt: onSelect weiterreichen! */}
-          <Camera onSelect={onSelect} />
+          <OrbitControls 
+            ref={controlsRef} 
+            enablePan={false} 
+            // ZOOM-LIMITS
+            minDistance={4}   
+            maxDistance={8}   
+          />
+          
+          {/* Die Kamera wird in eine Gruppe gepackt, 
+              die nur auf Mobile runterskaliert und verschoben wird.
+          */}
+          <group 
+            scale={isMobile ? 0.7 : 1} 
+            position={isMobile ? [0, -0.2, 0] : [0, 0, 0]}
+          >
+            <Camera onSelect={onSelect} />
+          </group>
         </Suspense>
 
         <ContactShadows position={[0, -0.4, 0]} opacity={0.6} scale={2} blur={1.5} far={0.8} />

@@ -308,3 +308,9 @@ body, html {
   from { transform: scale(0.9); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
 }
+
+.camera-screen {
+  /* ... deine bisherigen Styles ... */
+  backface-visibility: hidden; /* Verhindert, dass man die Rückseite des HTML-Elements sieht */
+  transform: translateZ(1px); /* Erzwingt eine minimale Verschiebung auf der Z-Achse */
+}
