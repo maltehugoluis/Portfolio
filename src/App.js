@@ -1,25 +1,31 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import CameraScene from './CameraScene';
+import PortfolioPage from './PortfolioPage';
 import './App.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+  const [view, setView] = useState('camera');
+  const [category, setCategory] = useState(null);
+
+  const handleOpenFolder = (selectedCat) => {
+    setCategory(selectedCat);
+    setView('portfolio');
+  };
+
+  // src/App.js
+return (
+  <div className="main-wrapper">
+    {/* Die Kamera bleibt im Hintergrund geladen, wird aber ausgeblendet */}
+    <div style={{ display: view === 'camera' ? 'block' : 'none' }}>
+      <CameraScene onSelect={handleOpenFolder} />
     </div>
-  );
+
+    {/* Das Portfolio wird darübergelegt */}
+    {view === 'portfolio' && (
+      <PortfolioPage category={category} onBack={() => setView('camera')} />
+    )}
+  </div>
+);
 }
 
 export default App;
