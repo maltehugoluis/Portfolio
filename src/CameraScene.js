@@ -18,7 +18,10 @@ export default function CameraScene({ onSelect }) {
         <div className="site-tagline">PORTFOLIO</div>
       </div>
 
-      <Canvas camera={{ position: [8, 0, 0], fov: 35 }}>
+      <Canvas 
+        camera={{ position: [8, 0, 0], fov: 35 }}
+        dpr={[1, 2]} // WICHTIG: Erlaubt normale und High-Res Displays (bis zu 2x)
+>
         <ambientLight intensity={0.8} />
         <Environment preset="city" />
         
