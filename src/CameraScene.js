@@ -20,7 +20,11 @@ export default function CameraScene({ onSelect }) {
         <Environment preset="city" />
         
         <Suspense fallback={null}>
-          <OrbitControls ref={controlsRef} enablePan={false} />
+          <OrbitControls ref={controlsRef} enablePan={false} 
+          // ZOOM-LIMITS (Beispielwerte basierend auf 20%)
+            minDistance={4}   // Verhindert zu nahes Heranzoomen
+            maxDistance={8}   // Verhindert zu weites Wegzoomen
+  />
           {/* HIER ist der wichtige Punkt: onSelect weiterreichen! */}
           <Camera onSelect={onSelect} />
         </Suspense>
