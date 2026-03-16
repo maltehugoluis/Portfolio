@@ -34,3 +34,33 @@ export default function CameraScene({ onSelect }) {
     </div>
   );
 }
+// In deiner CameraScene.js (oder wo das Modell geladen wird)
+
+export default function CameraScene() {
+  // Check, ob der Bildschirm schmaler als 768px ist
+  const isMobile = window.innerWidth < 768;
+
+  // Werte für Desktop vs. Mobile
+  const cameraScale = isMobile ? 0.7 : 1; // Kamera auf dem Handy 40% kleiner
+  const cameraPosition = isMobile ? [0, -0.5, 0] : [0, 0, 0]; // Etwas nach unten schieben auf Mobile
+  
+  return (
+    <group scale={cameraScale} position={cameraPosition}>
+       <primitive object={gltf.scene} />
+       
+       {/* Dein HTML Display-Element */}
+       <Html
+         transform
+         occlude
+         // Hier kannst du die Position des Displays auf dem Handy feinjustieren
+         position={[0.96, -0.38, 0.27]} 
+         rotation={[0, Math.PI / 2, 0]}
+         scale={isMobile ? 0.18 : 0.23} // Display-Inhalt auf Mobile auch skalieren
+       >
+         <div className="camera-screen">
+            {/* ... Dein Inhalt ... */}
+         </div>
+       </Html>
+    </group>
+  );
+}
