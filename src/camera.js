@@ -15,7 +15,7 @@ export default function Camera({ onSelect, isReady, currentView, isMobile }) {
  
   // FIX 4: distanceFactor abhängig vom FOV (Mobile: 45°, Desktop: 35°)
   // Kleinerer FOV = Objekt wirkt größer = distanceFactor muss kleiner sein
-  const distanceFactor = isMobile ? 1.11 : 2;
+  const distanceFactor = isMobile ? 0.9 : 2;
  
   return (
     <group>
