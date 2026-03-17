@@ -1,11 +1,10 @@
 import React, { Suspense, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Environment, ContactShadows } from '@react-three/drei';
-import Camera from './camera';
+import Camera from './camera'; // Importiert deine Camera-Komponente aus camera.js
 
 export default function CameraScene({ onSelect }) {
   const controlsRef = useRef();
-
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
   return (
@@ -19,13 +18,11 @@ export default function CameraScene({ onSelect }) {
       <Canvas 
         dpr={[1, 2]}
         camera={{ 
-          position: [10, 0, 0], 
-          fov: isMobile ? 45 : 35, 
-          near: 0.1 
+          position: [12, 0, 0], 
+          fov: isMobile ? 50 : 35 
         }}
       >
         <color attach="background" args={['#ffffff']} />
-        
         <ambientLight intensity={0.8} />
         <Environment preset="studio" />
         
@@ -33,30 +30,23 @@ export default function CameraScene({ onSelect }) {
           <OrbitControls 
             ref={controlsRef} 
             enablePan={false} 
-            minDistance={4}   
-            maxDistance={12}
-            minAzimuthAngle={isMobile ? Math.PI / 3.5 : -Infinity}
-            maxAzimuthAngle={isMobile ? Math.PI / 1.6 : Infinity}
-            minPolarAngle={isMobile ? Math.PI / 2.8 : 0}
-            maxPolarAngle={isMobile ? Math.PI / 1.8 : Math.PI}
+            minDistance={8}   
+            maxDistance={15}
             makeDefault
           />
           
           <group 
-            scale={isMobile ? 0.6 : 1} 
-            position={isMobile ? [0, -0.3, 0] : [0, 0, 0]}
+            scale={isMobile ? 0.8 : 1} 
+            position={isMobile ? [0, -0.5, 0] : [0, 0, 0]}
           >
             <Camera onSelect={onSelect} />
           </group>
 
           <ContactShadows 
-            position={[0, isMobile ? -0.8 : -1.0, 0]} 
-            opacity={0.6} 
-            scale={10} 
-            blur={2.5} 
-            far={2} 
-            resolution={512} 
-            color="#000000"
+            position={[0, -1.5, 0]} 
+            opacity={0.4} 
+            scale={20} 
+            blur={2} 
           />
         </Suspense>
       </Canvas>

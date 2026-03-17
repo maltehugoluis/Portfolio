@@ -1,26 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useGLTF, Html } from '@react-three/drei';
 
 export default function Camera({ onSelect }) {
   const { scene } = useGLTF('/models/camera.glb');
-  const [viewport, setViewport] = useState({ width: window.innerWidth, height: window.innerHeight });
-
-  useEffect(() => {
-    const handleResize = () => {
-      setViewport({ width: window.innerWidth, height: window.innerHeight });
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  const isMobile = viewport.width < 768;
-  const isSmallMobile = viewport.width < 400;
-
-  const screenPosition = [0.97, -0.30, 0.27];
-
-  const htmlScale = isMobile
-    ? isSmallMobile ? 0.18 : 0.23
-    : 0.23;
 
   return (
     <group>
@@ -28,15 +10,15 @@ export default function Camera({ onSelect }) {
       <Html
         transform
         occlude
-        position={screenPosition}
-        rotation={[0.00, Math.PI / 2, 0]}
-        scale={htmlScale}
+        position={[0.97, -0.30, 0.27]}
+        rotation={[0, Math.PI / 2, 0]}
+        scale={0.23}
         zIndexRange={[100, 0]}
         pointerEvents="auto"
       >
-        <div className="camera-screen" style={{ width: '280px', height: '180px' }}>
+        <div className="camera-screen">
           <div className="os-header">
-            <span>MHL OS v2.0</span>
+            <span>MHL OS v2.5</span>
           </div>
           <div className="os-grid">
             <button className="tile" onClick={() => onSelect('EVENTS')}>EVENTS</button>
