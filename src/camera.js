@@ -8,7 +8,7 @@ export default function Camera({ onSelect }) {
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
   // Hier kannst du die Position für Mobile (oben) und Desktop (unten) getrennt tunen
-  const mobilePosition = [0.72, -0.28, 0.27]; // X leicht erhöht gegen Durchscheinen
+  const mobilePosition = [0.72, -0.30, 0.27]; // X leicht erhöht gegen Durchscheinen
   const desktopPosition = [0.97, -0.30, 0.27];
 
   return (
@@ -21,7 +21,7 @@ export default function Camera({ onSelect }) {
         position={isMobile ? mobilePosition : desktopPosition} 
         rotation={[0.00, Math.PI / 2, 0]}
         // Skalierung auf Mobile etwas kleiner, damit es in den Kamerarücken passt
-        scale={isMobile ? 0.22 : 0.23}
+        scale={isMobile ? 0.23 : 0.23}
         zIndexRange={[10, 0]} 
       >
         <div className="camera-screen">
