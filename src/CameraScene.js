@@ -39,7 +39,7 @@ export default function CameraScene({ onSelect }) {
           */}
           <group 
             scale={isMobile ? 0.7 : 1} 
-            position={isMobile ? [0, -0.2, 0] : [0, 0, 0]}
+            position={isMobile ? [0,89, -0.2, 0] : [0, 0, 0]}
           >
             <Camera onSelect={onSelect} />
           </group>
