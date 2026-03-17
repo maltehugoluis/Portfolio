@@ -2,33 +2,28 @@ import React, { useEffect, useState } from 'react';
 
 const GALLERY_DATA = {
   EVENTS: [
-    { id: 1, src: '/images/event_freeflow_01.webp', title: 'FreeFlowFestival Badchieff', type: 'EVENT' },
-    { id: 2, src: '/images/event_freeflow_02.webp', title: 'FreeFlowFestival Kreissparkasse Biberach', type: 'EVENT' },
-    { id: 3, src: '/images/event_freeflow_03.webp', title: 'FreeFlowFestival Atmosphäre', type: 'EVENT' },
-    { id: 4, src: '/images/event_freeflow_04.webp', title: 'FreeFlowFestival Kreissparkasse Biberach', type: 'EVENT' },
-    { id: 5, src: '/images/event_freeflow_05.webp', title: 'FreeFlowFestival Atmosphäre', type: 'EVENT' },
-    { id: 6, src: '/images/event_freeflow_06.webp', title: 'FreeFlowFestival Atmosphäre', type: 'EVENT' },
-    { id: 7, src: '/images/event_freeflow_07.webp', title: 'FreeFlowFestival Souly', type: 'EVENT' },
-    { id: 8, src: '/images/event_freeflow_08.webp', title: 'FreeFlowFestival Souly', type: 'EVENT' },
-    
+    { id: 1, src: '/images/event_freeflow_01.webp', fallback: '/images/event_freeflow_01.jpg', title: 'FreeFlowFestival Badchieff', type: 'EVENT' },
+    { id: 2, src: '/images/event_freeflow_02.webp', fallback: '/images/event_freeflow_02.jpg', title: 'FreeFlowFestival Kreissparkasse Biberach', type: 'EVENT' },
+    { id: 3, src: '/images/event_freeflow_03.webp', fallback: '/images/event_freeflow_03.jpg', title: 'FreeFlowFestival Atmosphäre', type: 'EVENT' },
+    { id: 4, src: '/images/event_freeflow_04.webp', fallback: '/images/event_freeflow_04.jpg', title: 'FreeFlowFestival Kreissparkasse Biberach', type: 'EVENT' },
+    { id: 5, src: '/images/event_freeflow_05.webp', fallback: '/images/event_freeflow_05.jpg', title: 'FreeFlowFestival Atmosphäre', type: 'EVENT' },
+    { id: 6, src: '/images/event_freeflow_06.webp', fallback: '/images/event_freeflow_06.jpg', title: 'FreeFlowFestival Atmosphäre', type: 'EVENT' },
+    { id: 7, src: '/images/event_freeflow_07.webp', fallback: '/images/event_freeflow_07.jpg', title: 'FreeFlowFestival Souly', type: 'EVENT' },
+    { id: 8, src: '/images/event_freeflow_08.webp', fallback: '/images/event_freeflow_08.jpg', title: 'FreeFlowFestival Souly', type: 'EVENT' },
   ],
   STREET: [
-    { id: 10, src: '/images/street1.jpg', title: 'Street Life', type: 'portrait' },
-    // ... weitere Bilder
+    { id: 10, src: '/images/street1.webp', fallback: '/images/street1.jpg', title: 'Street Life', type: 'portrait' },
   ],
   NATURE: [
-    { id: 20, src: '/images/nature1.jpg', title: 'Mountain', type: 'landscape' },
-    // ... weitere Bilder
+    { id: 20, src: '/images/nature1.webp', fallback: '/images/nature1.jpg', title: 'Mountain', type: 'landscape' },
   ],
-  PEOPLE: [ // Hier stand vorher ABOUT
-    { id: 30, src: '/images/people1.jpg', title: 'Portrait', type: 'portrait' },
-    // ... weitere Bilder
+  PEOPLE: [
+    { id: 30, src: '/images/people1.webp', fallback: '/images/people1.jpg', title: 'Portrait', type: 'portrait' },
   ]
 };
 
-
 export default function PortfolioPage({ category, onBack }) {
-  const [selectedImg, setSelectedImg] = useState(null); // Zustand für die Lightbox
+  const [selectedImg, setSelectedImg] = useState(null); 
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -58,9 +53,17 @@ export default function PortfolioPage({ category, onBack }) {
             <div 
               key={img.id} 
               className="grid-item" 
-              onClick={() => setSelectedImg(img)} // Bild für Lightbox auswählen
+              onClick={() => setSelectedImg(img)} 
             >
-              <img src={img.src} alt={img.title} loading="lazy" />
+              <picture>
+                <source srcSet={img.src} type="image/webp" />
+                <img 
+                  src={img.fallback || img.src} 
+                  alt={img.title} 
+                  loading="lazy" 
+                  decoding="async" 
+                />
+              </picture>
               <div className="image-overlay">
                 <span>{img.title}</span>
               </div>
@@ -69,11 +72,18 @@ export default function PortfolioPage({ category, onBack }) {
         </div>
       </main>
 
-      {/* LIGHTBOX OVERLAY */}
       {selectedImg && (
         <div className="lightbox" onClick={() => setSelectedImg(null)}>
           <div className="lightbox-close">✕</div>
-          <img src={selectedImg.src} alt={selectedImg.title} onClick={(e) => e.stopPropagation()} />
+          <picture>
+            <source srcSet={selectedImg.src} type="image/webp" />
+            <img 
+              src={selectedImg.fallback || selectedImg.src} 
+              alt={selectedImg.title} 
+              onClick={(e) => e.stopPropagation()} 
+              decoding="async" 
+            />
+          </picture>
           <div className="lightbox-caption">{selectedImg.title}</div>
         </div>
       )}
@@ -84,5 +94,3 @@ export default function PortfolioPage({ category, onBack }) {
     </div>
   );
 }
-
-
