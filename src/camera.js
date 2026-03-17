@@ -21,7 +21,7 @@ export default function Camera({ onSelect }) {
   
   // Skalierung basierend auf Viewport-Breite normalisieren
   const htmlScale = isMobile
-    ? isSmallMobile ? 0.13 : 0.17
+    ? isSmallMobile ? 0.17 : 0.17
     : 0.23;
 
   return (
@@ -39,7 +39,7 @@ export default function Camera({ onSelect }) {
         // Verhindert dass Html seine eigene Transform-Matrix neu berechnet
         distanceFactor={undefined}
       >
-        <div className="camera-screen" style={{ width: '220px', height: '160px' }}>
+        <div className="camera-screen" style={{ width: '280px', height: '180px' }}>
           <div className="os-header">
             <span>MHL OS v2.0</span>
           </div>
