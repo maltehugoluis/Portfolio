@@ -14,15 +14,13 @@ export default function Camera({ onSelect }) {
   }, []);
 
   const isMobile = viewport.width < 768;
-    const isSmallMobile = viewport.width < 400;
+  const isSmallMobile = viewport.width < 400;
 
-    const screenPosition = [0.97, -0.30, 0.27]; // ← hier einfügen
+  const screenPosition = [0.97, -0.30, 0.27];
 
-    const distanceFactor = isMobile
-    ? isSmallMobile ? 10 : 6
-    : undefined;
-
-    const htmlScale = isMobile ? 0.23 : 0.23;
+  const htmlScale = isMobile
+    ? isSmallMobile ? 0.18 : 0.30
+    : 0.23;
 
   return (
     <group>
@@ -33,10 +31,9 @@ export default function Camera({ onSelect }) {
         position={screenPosition}
         rotation={[0.00, Math.PI / 2, 0]}
         scale={htmlScale}
-        distanceFactor={distanceFactor}  // ← neu
         zIndexRange={[100, 0]}
         pointerEvents="auto"
-        >
+      >
         <div className="camera-screen" style={{ width: '280px', height: '180px' }}>
           <div className="os-header">
             <span>MHL OS v2.0</span>
