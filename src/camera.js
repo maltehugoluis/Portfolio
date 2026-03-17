@@ -21,7 +21,7 @@ export default function Camera({ onSelect }) {
         position={isMobile ? mobilePosition : desktopPosition} 
         rotation={[0.00, Math.PI / 2, 0]}
         // Skalierung auf Mobile etwas kleiner, damit es in den Kamerarücken passt
-        scale={isMobile ? 0.25 : 0.23}
+        scale={isMobile ? 0.23 : 0.23}
         zIndexRange={[10, 0]} 
       >
         <div className="camera-screen">
