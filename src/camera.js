@@ -16,7 +16,7 @@ export default function Camera({ onSelect }) {
           occlude
           position={[0.95, -0.30, 0.27]}
           rotation={[0, Math.PI / 2, 0]}
-          distanceFactor={1.2} 
+          distanceFactor={2.0} 
           eps={0.00001}
         >
           <div className="camera-screen-pro">

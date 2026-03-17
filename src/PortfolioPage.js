@@ -36,7 +36,6 @@ export default function PortfolioPage({ category, onBack }) {
     window.scrollTo(0, 0);
   }, []);
 
-  // Blockiert das Scrollen der Seite im Hintergrund, wenn die Lightbox offen ist
   useEffect(() => {
     if (selectedImg) {
       document.body.style.overflow = 'hidden';
@@ -81,7 +80,9 @@ export default function PortfolioPage({ category, onBack }) {
                   decoding="async" 
                 />
               </picture>
-              <div className="image-overlay">
+              
+              {/* Geänderte Klasse für den Hover-Text-Fix */}
+              <div className="image-title-overlay">
                 <span>{img.title}</span>
               </div>
             </div>
@@ -89,80 +90,29 @@ export default function PortfolioPage({ category, onBack }) {
         </div>
       </main>
 
-      {/* LIGHTBOX OVERLAY - Für Mobile optimiert */}
       {selectedImg && (
         <div 
           className="lightbox" 
           onClick={() => setSelectedImg(null)}
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100vw',
-            height: '100vh',
-            backgroundColor: 'rgba(255, 255, 255, 0.98)',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            zIndex: 99999,
-            padding: '20px',
-            boxSizing: 'border-box'
-          }}
         >
-          <div 
-            className="lightbox-close" 
-            style={{
-              position: 'absolute',
-              top: '20px',
-              right: '20px',
-              fontSize: '32px',
-              cursor: 'pointer',
-              zIndex: 100000,
-              color: '#000000',
-              padding: '10px'
-            }}
-          >✕</div>
+          <div className="lightbox-close">✕</div>
           
-          <picture 
-            onClick={(e) => e.stopPropagation()}
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              width: '100%',
-              height: '80vh'
-            }}
-          >
+          <picture onClick={(e) => e.stopPropagation()}>
             <source srcSet={selectedImg.src} type="image/webp" />
             <img 
               src={selectedImg.fallback || selectedImg.src} 
               alt={selectedImg.title} 
               decoding="async" 
-              style={{
-                maxWidth: '100%',
-                maxHeight: '100%',
-                objectFit: 'contain'
-              }}
             />
           </picture>
 
-          <div 
-            className="lightbox-caption"
-            style={{
-              marginTop: '15px',
-              fontSize: '16px',
-              fontWeight: '500',
-              color: '#000000',
-              textAlign: 'center'
-            }}
-          >
+          <div className="lightbox-caption">
             {selectedImg.title}
           </div>
         </div>
       )}
 
-      <footer className="portfolio-footer">
+      <footer className="portfolio-footer" style={{ marginTop: '80px', paddingBottom: '40px', textAlign: 'center', opacity: 0.5 }}>
         <p>© 2026 MHL INTERACTIVE</p>
       </footer>
     </div>
