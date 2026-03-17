@@ -21,7 +21,7 @@ export default function CameraScene({ onSelect }) {
         // WICHTIG: dpr={[1, 2]} passt die Auflösung ans Handy an
         dpr={[1, 2]}
         // fov: 45 auf Mobile zeigt mehr vom Raum, damit die Kamera nicht verschwindet
-        camera={{ position: [10, 0, 0], fov: isMobile ? 45 : 35 }}
+        camera={{ position: [10, 0, 0], fov: isMobile ? 45 : 35, near: 0.1, }}
       >
         <ambientLight intensity={0.8} />
         <Environment preset="city" />
