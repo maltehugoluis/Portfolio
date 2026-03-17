@@ -99,9 +99,10 @@ export default function CameraScene({ onSelect }) {
           <group 
             scale={isMobile ? 0.8 : 1} 
             position={isMobile ? [0, -0.5, 0] : [0, 0, 0]}
-          >
-            <Camera onSelect={onSelect} />
-          </group>
+            >
+            {/* Wir übergeben isLoading als prop an die Camera */}
+            <Camera onSelect={onSelect} isReady={!isLoading} />
+            </group>
 
           <ContactShadows 
             position={[0, -1.5, 0]} 

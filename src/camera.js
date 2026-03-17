@@ -1,22 +1,21 @@
 import React from 'react';
-import { useGLTF, Html, useProgress } from '@react-three/drei';
+import { useGLTF, Html } from '@react-three/drei';
 
-export default function Camera({ onSelect }) {
+export default function Camera({ onSelect, isReady }) {
   const { scene } = useGLTF('/models/camera.glb');
-  const { progress } = useProgress(); // Ladestatus abfragen
 
   return (
     <group>
       <primitive object={scene} scale={20} />
       
-      {/* Das Display wird nur gerendert, wenn progress === 100 */}
-      {progress === 100 && (
+      {/* Das Display wird NUR gerendert, wenn isReady true ist UND progress 100 war */}
+      {isReady && (
         <Html
           transform
           occlude
           position={[0.95, -0.30, 0.27]}
           rotation={[0, Math.PI / 2, 0]}
-          distanceFactor={2.0} 
+          distanceFactor={2} 
           eps={0.00001}
         >
           <div className="camera-screen-pro">
