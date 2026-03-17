@@ -15,7 +15,11 @@ const GALLERY_DATA = {
     { id: 11, src: '/images/event_hochzeit_11.webp', fallback: '/images/event_hochzeit_11.jpg', title: 'Hochzeit', type: 'EVENT' },
   ],
   STREET: [
-    { id: 10, src: '/images/street1.webp', fallback: '/images/street1.jpg', title: 'Street Life', type: 'portrait' },
+    { id: 12, src: '/images/street_dublin_01.webp', fallback: '/images/street_dublin_01.jpg', title: 'Dublin Street', type: 'STREET' },
+    { id: 13, src: '/images/street_dublin_02.webp', fallback: '/images/street_dublin_02.jpg', title: 'Dublin Street', type: 'STREET' },
+    { id: 14, src: '/images/street_dublin_03.webp', fallback: '/images/street_dublin_03.jpg', title: 'Dublin Street', type: 'STREET' },
+    { id: 15, src: '/images/street_dublin_04.webp', fallback: '/images/street_dublin_04.jpg', title: 'Dublin Street', type: 'STREET' },
+    { id: 16, src: '/images/street_hamburg_01.webp', fallback: '/images/street_hamburg_01.jpg', title: 'Hamburg Street', type: 'STREET' },
   ],
   NATURE: [
     { id: 20, src: '/images/nature1.webp', fallback: '/images/nature1.jpg', title: 'Mountain', type: 'landscape' },

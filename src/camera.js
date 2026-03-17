@@ -1,13 +1,9 @@
-import React from 'react'
-import { useGLTF, Html } from '@react-three/drei'
+import React from 'react';
+import { useGLTF, Html } from '@react-three/drei';
 
 export default function Camera({ onSelect }) {
-  const { scene } = useGLTF('/models/camera.glb')
-
+  const { scene } = useGLTF('/models/camera.glb');
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-
-  const mobilePosition = [0.70, -0.30, 0.27];
-  const desktopPosition = [0.97, -0.30, 0.27];
 
   return (
     <group>
@@ -16,9 +12,9 @@ export default function Camera({ onSelect }) {
       <Html
         transform
         occlude={!isMobile}
-        position={isMobile ? mobilePosition : desktopPosition} 
+        position={[0.97, -0.30, 0.27]} 
         rotation={[0.00, Math.PI / 2, 0]}
-        scale={isMobile ? 0.23 : 0.23}
+        scale={0.23}
         zIndexRange={[100, 0]} 
         pointerEvents="auto"
       >
@@ -44,5 +40,5 @@ export default function Camera({ onSelect }) {
         </div>
       </Html>
     </group>
-  )
+  );
 }
