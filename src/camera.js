@@ -19,7 +19,7 @@ export default function Camera({ onSelect }) {
   const screenPosition = [0.97, -0.30, 0.27];
 
   const htmlScale = isMobile
-    ? isSmallMobile ? 0.18 : 0.30
+    ? isSmallMobile ? 0.18 : 0.27
     : 0.23;
 
   return (
