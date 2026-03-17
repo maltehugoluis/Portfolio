@@ -72,7 +72,11 @@ body, html {
   text-transform: uppercase;
 }
 
-/* --- KAMERA DISPLAY (PRO-FIX FÜR APPLE & ANDROID) --- */
+/* --- KAMERA DISPLAY ---
+   distanceFactor={12} in camera.js bestimmt die Größe im 3D-Raum.
+   width/height hier bestimmt die native Auflösung — größer = schärfer.
+   Faustregel: width/height so groß wie gewünscht, distanceFactor anpassen bis Größe stimmt.
+--- */
 .camera-screen-pro {
   width: 320px;
   height: 200px;
@@ -83,12 +87,6 @@ body, html {
   flex-direction: column;
   overflow: hidden;
   border: 1px solid #333;
-  
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-  image-rendering: -webkit-optimize-contrast;
   touch-action: none;
 }
 
@@ -104,15 +102,17 @@ body, html {
   border-bottom: 1px solid #222;
   text-transform: uppercase;
   letter-spacing: 1px;
+  flex-shrink: 0;
 }
 
 .os-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
-  gap: 10px;
-  padding: 12px;
-  flex-grow: 1;
+  gap: 8px;
+  padding: 10px;
+  flex: 1;
+  min-height: 0;
 }
 
 .tile {
@@ -309,12 +309,17 @@ body, html {
   .site-logo { font-size: 42px; }
   .portfolio-wrapper { padding: 20px; }
   .header-left { flex-direction: column; align-items: flex-start; gap: 10px; }
-  
+
+  .camera-screen-pro {
+    width: 320px;
+    height: 200px;
+  }
+
   .lightbox-caption {
     font-size: 12px;
     margin-top: 15px;
   }
-  
+
   .lightbox-close {
     top: 20px;
     right: 20px;

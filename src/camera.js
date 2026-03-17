@@ -1,38 +1,42 @@
 // src/camera.js
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { useGLTF, Html } from '@react-three/drei';
 import { useThree, useFrame } from '@react-three/fiber';
 
 export default function Camera({ onSelect, isReady, currentView }) {
   const { scene } = useGLTF('/models/camera.glb');
-  const { camera } = useThree();
-  const [distanceFactor, setDistanceFactor] = useState(2);
+  const { camera, size } = useThree();
+  const [cssScale, setCssScale] = useState(1);
 
-  // useFrame läuft jeden Frame — berechnet Distanz live
   useFrame(() => {
-    const dx = camera.position.x - 0.95;
-    const dy = camera.position.y - (-0.30);
-    const dz = camera.position.z - 0.27;
-    const realDistance = Math.sqrt(dx * dx + dy * dy + dz * dz);
-
-    // 6.5 anpassen bis die Größe passt: größer = kleiner Display, kleiner = größer Display
-    const newFactor = realDistance / 5.5;
-
-    setDistanceFactor(newFactor);
+    // Berechnet einen CSS scale-Faktor aus FOV + Viewport
+    // Normalisiert gegen einen Referenzwert (FOV 35, Höhe 900px)
+    // => auf JEDEM Gerät gleiche angezeigte Größe
+    const fovRad = (camera.fov * Math.PI) / 180;
+    const currentTan = Math.tan(fovRad / 2);
+    const refTan = Math.tan((35 * Math.PI / 180) / 2); // Referenz: FOV 35°
+    const fovScale = refTan / currentTan;
+    const heightScale = size.height / 470; // Referenz: 500px Höhe
+    setCssScale(fovScale * heightScale);
   });
 
   return (
     <group>
       <primitive object={scene} scale={20} />
-      
+
       {isReady && currentView === 'camera' && (
         <Html
           transform
           occlude
           position={[0.95, -0.30, 0.27]}
           rotation={[0, Math.PI / 2, 0]}
-          distanceFactor={distanceFactor}
+          distanceFactor={1}
           eps={0.0001}
+          zIndexRange={[10, 0]}
+          style={{
+            transform: `scale(${cssScale})`,
+            transformOrigin: 'center center',
+          }}
         >
           <div className="camera-screen-pro">
             <div className="os-header">
