@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useGLTF, Html } from '@react-three/drei';
 
 export default function Camera({ onSelect }) {
   const { scene } = useGLTF('/models/camera.glb');
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
 
   return (
     <group>
@@ -12,7 +16,7 @@ export default function Camera({ onSelect }) {
       <Html
         transform
         occlude={!isMobile}
-        position={[isMobile ? 0.70 : 0.70, -0.30, 0.27]} 
+        position={[isMobile ? 0.85 : 0.97, -0.30, 0.27]} 
         rotation={[0.00, Math.PI / 2, 0]}
         scale={0.23}
         zIndexRange={[100, 0]} 
