@@ -13,7 +13,7 @@ export default function Camera({ onSelect, isReady, currentView }) {
     // Referenz: FOV 35° (Desktop) — auf Mobile mit FOV 45° wird skaliert
     const fovRad = (camera.fov * Math.PI) / 180;
     const currentTan = Math.tan(fovRad / 2);
-    const refTan = Math.tan((35 * Math.PI / 180) / 2);
+    const refTan = Math.tan((20 * Math.PI / 180) / 2);
     const fovScale = refTan / currentTan;
     setCssScale(fovScale);
   });
