@@ -14,15 +14,14 @@ export default function Camera({ onSelect }) {
   }, []);
 
   const isMobile = viewport.width < 768;
-  const isSmallMobile = viewport.width < 400;
+    const isSmallMobile = viewport.width < 400;
 
-  // Feste 3D-Position relativ zum Modell – kein responsives Switching mehr
-  const screenPosition = [0.97, -0.30, 0.27];
-  
-  // Skalierung basierend auf Viewport-Breite normalisieren
-  const htmlScale = isMobile
-    ? isSmallMobile ? 0.17 : 0.17
-    : 0.23;
+    // Statt scale, nutze distanceFactor für konsistente Größe
+    const distanceFactor = isMobile
+    ? isSmallMobile ? 3.5 : 4.5
+    : undefined; // Desktop bleibt wie es ist
+
+    const htmlScale = isMobile ? 0.28 : 0.23; // Mobile etwas größer
 
   return (
     <group>
@@ -33,12 +32,10 @@ export default function Camera({ onSelect }) {
         position={screenPosition}
         rotation={[0.00, Math.PI / 2, 0]}
         scale={htmlScale}
+        distanceFactor={distanceFactor}  // ← neu
         zIndexRange={[100, 0]}
         pointerEvents="auto"
-        style={{ pointerEvents: 'auto' }}
-        // Verhindert dass Html seine eigene Transform-Matrix neu berechnet
-        distanceFactor={undefined}
-      >
+        >
         <div className="camera-screen" style={{ width: '280px', height: '180px' }}>
           <div className="os-header">
             <span>MHL OS v2.0</span>
