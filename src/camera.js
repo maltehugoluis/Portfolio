@@ -16,12 +16,13 @@ export default function Camera({ onSelect }) {
   const isMobile = viewport.width < 768;
     const isSmallMobile = viewport.width < 400;
 
-    // Statt scale, nutze distanceFactor für konsistente Größe
+    const screenPosition = [0.97, -0.30, 0.27]; // ← hier einfügen
+
     const distanceFactor = isMobile
     ? isSmallMobile ? 3.5 : 4.5
-    : undefined; // Desktop bleibt wie es ist
+    : undefined;
 
-    const htmlScale = isMobile ? 0.28 : 0.23; // Mobile etwas größer
+    const htmlScale = isMobile ? 0.28 : 0.23;
 
   return (
     <group>
