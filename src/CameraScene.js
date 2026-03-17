@@ -38,20 +38,19 @@ function OverlayLoader({ loading }) {
   );
 }
 
-export default function CameraScene({ onSelect }) {
+export default function CameraScene({ onSelect, currentView }) {
   const controlsRef = useRef();
   const [isLoading, setIsLoading] = useState(true);
   const { progress } = useProgress();
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
-  // Sobald der Fortschritt 100 erreicht, setzen wir isLoading auf false
+  // Überwachung des Ladeprozesses
   useEffect(() => {
-  if (progress === 100) {
-    // Erhöhe den Timeout auf 800ms, damit das Modell sicher gerendert ist
-    const timer = setTimeout(() => setIsLoading(false), 800);
-    return () => clearTimeout(timer);
+    if (progress === 100) {
+      const timer = setTimeout(() => setIsLoading(false), 800);
+      return () => clearTimeout(timer);
     }
-    }, [progress]);
+  }, [progress]);
 
   return (
     <div className="canvas-container" style={{ position: 'relative', width: '100vw', height: '100vh', background: '#fff' }}>
@@ -65,7 +64,6 @@ export default function CameraScene({ onSelect }) {
       <OverlayLoader loading={isLoading} />
 
       <Canvas 
-        /* gl-Einstellungen für maximale Kompatibilität auf Apple-Geräten */
         gl={{ 
           antialias: true, 
           alpha: true, 
@@ -75,7 +73,7 @@ export default function CameraScene({ onSelect }) {
         dpr={[1, 2]} 
         camera={{ 
           position: [12, 0, 0], 
-          fov: isMobile ? 45 : 35, // Leicht reduzierter FOV für besseren Fokus auf Mobile
+          fov: isMobile ? 45 : 35,
           near: 0.1,
           far: 1000
         }}
@@ -91,7 +89,6 @@ export default function CameraScene({ onSelect }) {
             minDistance={8}   
             maxDistance={15}
             makeDefault
-            /* Begrenzung der Rotation für ein sauberes UI-Gefühl auf Mobile */
             minPolarAngle={Math.PI / 4}
             maxPolarAngle={Math.PI / 1.5}
           />
@@ -99,10 +96,14 @@ export default function CameraScene({ onSelect }) {
           <group 
             scale={isMobile ? 0.8 : 1} 
             position={isMobile ? [0, -0.5, 0] : [0, 0, 0]}
-            >
-            {/* Wir übergeben isLoading als prop an die Camera */}
-            <Camera onSelect={onSelect} isReady={!isLoading} />
-            </group>
+          >
+            {/* Hier wird currentView an die Camera-Komponente durchgereicht */}
+            <Camera 
+              onSelect={onSelect} 
+              isReady={!isLoading} 
+              currentView={currentView} 
+            />
+          </group>
 
           <ContactShadows 
             position={[0, -1.5, 0]} 
