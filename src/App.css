@@ -13,7 +13,7 @@ body, html {
   width: 100vw;
   height: 100vh;
   position: relative;
-  background: #F5EC78; /* Dein markantes Gelb */
+  background: #ffffff; /* Dein markantes Gelb */
 }
 
 .canvas-container {
@@ -315,3 +315,11 @@ body, html {
   transform: translateZ(1px); /* Erzwingt eine minimale Verschiebung auf der Z-Achse */
 }
 
+body, html, #root, .App, .canvas-container, .portfolio-wrapper, .portfolio-container {
+  background-color: #ffffff !important;
+  transition: background-color 0s !important;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
