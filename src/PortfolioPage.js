@@ -10,6 +10,9 @@ const GALLERY_DATA = {
     { id: 6, src: '/images/event_freeflow_06.webp', fallback: '/images/event_freeflow_06.jpg', title: 'FreeFlowFestival Atmosphäre', type: 'EVENT' },
     { id: 7, src: '/images/event_freeflow_07.webp', fallback: '/images/event_freeflow_07.jpg', title: 'FreeFlowFestival Souly', type: 'EVENT' },
     { id: 8, src: '/images/event_freeflow_08.webp', fallback: '/images/event_freeflow_08.jpg', title: 'FreeFlowFestival Souly', type: 'EVENT' },
+    { id: 9, src: '/images/event_hochzeit_09.webp', fallback: '/images/event_hochzeit_09.jpg', title: 'Hochzeit', type: 'EVENT' },
+    { id: 10, src: '/images/event_hochzeit_10.webp', fallback: '/images/event_hochzeit_10.jpg', title: 'Hochzeit', type: 'EVENT' },
+    { id: 11, src: '/images/event_hochzeit_11.webp', fallback: '/images/event_hochzeit_11.jpg', title: 'Hochzeit', type: 'EVENT' },
   ],
   STREET: [
     { id: 10, src: '/images/street1.webp', fallback: '/images/street1.jpg', title: 'Street Life', type: 'portrait' },
