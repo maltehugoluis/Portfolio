@@ -14,14 +14,17 @@ export default function CameraScene({ onSelect }) {
       {/* Dein Branding */}
       <div className="site-brand">
         <div className="site-logo">MHL</div>
-        {/* ... */}
+        <div className="site-subtitle">INTERACTIVE</div>
+        <div className="site-tagline">PORTFOLIO</div>
       </div>
 
       <Canvas 
-        // WICHTIG: dpr={[1, 2]} passt die Auflösung ans Handy an
         dpr={[1, 2]}
-        // fov: 45 auf Mobile zeigt mehr vom Raum, damit die Kamera nicht verschwindet
-        camera={{ position: [10, 0, 0], fov: isMobile ? 45 : 35, near: 0.1, }}
+        camera={{ 
+          position: [10, 0, 0], 
+          fov: isMobile ? 45 : 35, 
+          near: 0.1 
+        }}
       >
         <ambientLight intensity={0.8} />
         <Environment preset="city" />
@@ -31,7 +34,18 @@ export default function CameraScene({ onSelect }) {
             ref={controlsRef} 
             enablePan={false} 
             minDistance={4}   
-            maxDistance={12} // Etwas mehr Spielraum zum Zurückzoomen
+            maxDistance={12}
+
+            /* DREH-BEGRENZUNG: Nur auf Mobile aktiv */
+            /* Azimuth: Horizontale Drehung */
+            minAzimuthAngle={isMobile ? Math.PI / 3.5 : -Infinity}
+            maxAzimuthAngle={isMobile ? Math.PI / 1.6 : Infinity}
+
+            /* Polar: Vertikale Drehung (hoch/runter) */
+            minPolarAngle={isMobile ? Math.PI / 2.8 : 0}
+            maxPolarAngle={isMobile ? Math.PI / 1.8 : Math.PI}
+            
+            makeDefault
           />
           
           <group 
