@@ -19,7 +19,7 @@ export default function Camera({ onSelect }) {
     const screenPosition = [0.97, -0.30, 0.27]; // ← hier einfügen
 
     const distanceFactor = isMobile
-    ? isSmallMobile ? 5 : 6
+    ? isSmallMobile ? 6 : 6
     : undefined;
 
     const htmlScale = isMobile ? 0.23 : 0.23;
