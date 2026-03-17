@@ -46,11 +46,12 @@ export default function CameraScene({ onSelect }) {
 
   // Sobald der Fortschritt 100 erreicht, setzen wir isLoading auf false
   useEffect(() => {
-    if (progress === 100) {
-      const timer = setTimeout(() => setIsLoading(false), 500);
-      return () => clearTimeout(timer);
+  if (progress === 100) {
+    // Erhöhe den Timeout auf 800ms, damit das Modell sicher gerendert ist
+    const timer = setTimeout(() => setIsLoading(false), 800);
+    return () => clearTimeout(timer);
     }
-  }, [progress]);
+    }, [progress]);
 
   return (
     <div className="canvas-container" style={{ position: 'relative', width: '100vw', height: '100vh', background: '#fff' }}>
