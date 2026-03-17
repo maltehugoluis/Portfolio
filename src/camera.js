@@ -22,7 +22,7 @@ export default function Camera({ onSelect }) {
     ? isSmallMobile ? 3.5 : 4.5
     : undefined;
 
-    const htmlScale = isMobile ? 0.28 : 0.23;
+    const htmlScale = isMobile ? 0.23 : 0.23;
 
   return (
     <group>
