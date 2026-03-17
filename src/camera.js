@@ -5,19 +5,17 @@ import { useThree, useFrame } from '@react-three/fiber';
 
 export default function Camera({ onSelect, isReady, currentView }) {
   const { scene } = useGLTF('/models/camera.glb');
-  const { camera, size } = useThree();
+  const { camera } = useThree();
   const [cssScale, setCssScale] = useState(1);
 
   useFrame(() => {
-    // Berechnet einen CSS scale-Faktor aus FOV + Viewport
-    // Normalisiert gegen einen Referenzwert (FOV 35, Höhe 900px)
-    // => auf JEDEM Gerät gleiche angezeigte Größe
+    // Nur FOV ausgleichen — keine Bildschirmgröße
+    // Referenz: FOV 35° (Desktop) — auf Mobile mit FOV 45° wird skaliert
     const fovRad = (camera.fov * Math.PI) / 180;
     const currentTan = Math.tan(fovRad / 2);
-    const refTan = Math.tan((35 * Math.PI / 180) / 2); // Referenz: FOV 35°
+    const refTan = Math.tan((35 * Math.PI / 180) / 2);
     const fovScale = refTan / currentTan;
-    const heightScale = size.height / 470; // Referenz: 500px Höhe
-    setCssScale(fovScale * heightScale);
+    setCssScale(fovScale);
   });
 
   return (
