@@ -2,13 +2,13 @@ import React, { Suspense, useRef, useState, useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Environment, ContactShadows, useProgress } from '@react-three/drei';
 import Camera from './camera';
-
+ 
 // Loader-Komponente außerhalb des Canvas für maximale Stabilität
 function OverlayLoader({ loading }) {
   const { progress } = useProgress();
   
   if (!loading) return null;
-
+ 
   return (
     <div style={{
       position: 'absolute',
@@ -37,13 +37,25 @@ function OverlayLoader({ loading }) {
     </div>
   );
 }
-
+ 
 export default function CameraScene({ onSelect, currentView }) {
   const controlsRef = useRef();
   const [isLoading, setIsLoading] = useState(true);
   const { progress } = useProgress();
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-
+ 
+  // FIX 1: isMobile reaktiv mit useState + useEffect statt statischer Berechnung
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== 'undefined' && window.innerWidth < 768
+  );
+ 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+ 
   // Überwachung des Ladeprozesses
   useEffect(() => {
     if (progress === 100) {
@@ -51,7 +63,7 @@ export default function CameraScene({ onSelect, currentView }) {
       return () => clearTimeout(timer);
     }
   }, [progress]);
-
+ 
   return (
     <div className="canvas-container" style={{ position: 'relative', width: '100vw', height: '100vh', background: '#fff' }}>
       
@@ -60,9 +72,9 @@ export default function CameraScene({ onSelect, currentView }) {
         <div className="site-subtitle">INTERACTIVE</div>
         <div className="site-tagline">PORTFOLIO</div>
       </div>
-
+ 
       <OverlayLoader loading={isLoading} />
-
+ 
       <Canvas 
         gl={{ 
           antialias: true, 
@@ -97,14 +109,15 @@ export default function CameraScene({ onSelect, currentView }) {
             scale={isMobile ? 0.8 : 1} 
             position={isMobile ? [0, -0.5, 0] : [0, 0, 0]}
           >
-            {/* Hier wird currentView an die Camera-Komponente durchgereicht */}
+            {/* FIX 2: isMobile an Camera weitergeben für adaptives distanceFactor */}
             <Camera 
               onSelect={onSelect} 
               isReady={!isLoading} 
-              currentView={currentView} 
+              currentView={currentView}
+              isMobile={isMobile}
             />
           </group>
-
+ 
           <ContactShadows 
             position={[0, -1.5, 0]} 
             opacity={0.4} 

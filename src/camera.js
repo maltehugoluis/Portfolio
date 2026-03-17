@@ -1,11 +1,22 @@
 // src/camera.js
 import React from 'react';
 import { useGLTF, Html, useProgress } from '@react-three/drei';
-
-export default function Camera({ onSelect, isReady, currentView }) {
+ 
+export default function Camera({ onSelect, isReady, currentView, isMobile }) {
   const { scene } = useGLTF('/models/camera.glb');
   const { progress } = useProgress();
-
+ 
+  // FIX 3: distanceFactor und position adaptiv je nach Gerät
+  // Falls das Display bei deinen Freunden immer noch leicht verschoben ist,
+  // passe die position-Werte für mobile/desktop separat an.
+  const htmlPosition = isMobile
+    ? [0.95, -0.30, 0.27]   // Mobile-Position – ggf. anpassen
+    : [0.95, -0.30, 0.27];  // Desktop-Position – ggf. anpassen
+ 
+  // FIX 4: distanceFactor abhängig vom FOV (Mobile: 45°, Desktop: 35°)
+  // Kleinerer FOV = Objekt wirkt größer = distanceFactor muss kleiner sein
+  const distanceFactor = isMobile ? 1.55 : 2;
+ 
   return (
     <group>
       <primitive object={scene} scale={20} />
@@ -14,10 +25,10 @@ export default function Camera({ onSelect, isReady, currentView }) {
         <Html
           transform
           occlude
-          position={[0.95, -0.30, 0.27]}
+          position={htmlPosition}
           rotation={[0, Math.PI / 2, 0]}
-          distanceFactor={2} 
-          eps={0.00001}
+          distanceFactor={distanceFactor}
+          eps={0.0001}
         >
           <div className="camera-screen-pro">
             <div className="os-header">
