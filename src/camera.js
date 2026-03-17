@@ -8,7 +8,7 @@ export default function Camera({ onSelect }) {
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
   // Hier kannst du die Position für Mobile (oben) und Desktop (unten) getrennt tunen
-  const mobilePosition = [0.85, -0.28, 0.27]; // X leicht erhöht gegen Durchscheinen
+  const mobilePosition = [0.91, -0.28, 0.27]; // X leicht erhöht gegen Durchscheinen
   const desktopPosition = [0.97, -0.30, 0.27];
 
   return (
