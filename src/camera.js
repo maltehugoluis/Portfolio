@@ -10,13 +10,16 @@ export default function Camera({ onSelect }) {
       <Html
         transform
         occlude
-        position={[0.96, -0.30, 0.27]}
+        /* Nutze exakte Koordinaten */
+        position={[0.97, -0.30, 0.27]}
         rotation={[0, Math.PI / 2, 0]}
-        scale={0.23}
-        zIndexRange={[100, 0]}
-        pointerEvents="auto"
+        /* distanceFactor ist der Schlüssel: 
+           Er fixiert die Größe relativ zur 3D-Welt, NICHT zum Bildschirm-Zoom */
+        distanceFactor={1.2} 
+        /* Verhindert das "Zittern" auf iOS */
+        eps={0.00001}
       >
-        <div className="camera-screen">
+        <div className="camera-screen-pro">
           <div className="os-header">
             <span>MHL OS v2.5</span>
           </div>

@@ -7,7 +7,6 @@ import Camera from './camera';
 function OverlayLoader({ loading }) {
   const { progress } = useProgress();
   
-  // Wenn das Laden beendet ist, blenden wir den Loader aus
   if (!loading) return null;
 
   return (
@@ -22,7 +21,7 @@ function OverlayLoader({ loading }) {
       alignItems: 'center',
       justifyContent: 'center',
       backgroundColor: '#ffffff',
-      zIndex: 2000 // Über allem anderen
+      zIndex: 2000 
     }}>
       <div className="spinner"></div>
       <p style={{ 
@@ -30,7 +29,8 @@ function OverlayLoader({ loading }) {
         fontWeight: '900', 
         marginTop: '20px',
         color: '#000',
-        letterSpacing: '2px'
+        letterSpacing: '2px',
+        textTransform: 'uppercase'
       }}>
         LOADING {Math.round(progress)}%
       </p>
@@ -47,30 +47,36 @@ export default function CameraScene({ onSelect }) {
   // Sobald der Fortschritt 100 erreicht, setzen wir isLoading auf false
   useEffect(() => {
     if (progress === 100) {
-      // Kleiner Delay für geschmeidigeren Übergang
       const timer = setTimeout(() => setIsLoading(false), 500);
       return () => clearTimeout(timer);
     }
   }, [progress]);
 
   return (
-    <div className="canvas-container" style={{ position: 'relative', width: '100vw', height: '100vh' }}>
+    <div className="canvas-container" style={{ position: 'relative', width: '100vw', height: '100vh', background: '#fff' }}>
       
-      {/* Das Branding */}
       <div className="site-brand">
         <div className="site-logo">MHL</div>
         <div className="site-subtitle">INTERACTIVE</div>
         <div className="site-tagline">PORTFOLIO</div>
       </div>
 
-      {/* DER LOADER (AUẞERHALB DES CANVAS) */}
       <OverlayLoader loading={isLoading} />
 
       <Canvas 
-        dpr={[1, 2]}
+        /* gl-Einstellungen für maximale Kompatibilität auf Apple-Geräten */
+        gl={{ 
+          antialias: true, 
+          alpha: true, 
+          powerPreference: "high-performance",
+          preserveDrawingBuffer: true
+        }}
+        dpr={[1, 2]} 
         camera={{ 
           position: [12, 0, 0], 
-          fov: isMobile ? 50 : 35 
+          fov: isMobile ? 45 : 35, // Leicht reduzierter FOV für besseren Fokus auf Mobile
+          near: 0.1,
+          far: 1000
         }}
       >
         <color attach="background" args={['#ffffff']} />
@@ -84,6 +90,9 @@ export default function CameraScene({ onSelect }) {
             minDistance={8}   
             maxDistance={15}
             makeDefault
+            /* Begrenzung der Rotation für ein sauberes UI-Gefühl auf Mobile */
+            minPolarAngle={Math.PI / 4}
+            maxPolarAngle={Math.PI / 1.5}
           />
           
           <group 
@@ -98,6 +107,7 @@ export default function CameraScene({ onSelect }) {
             opacity={0.4} 
             scale={20} 
             blur={2} 
+            far={4.5}
           />
         </Suspense>
       </Canvas>

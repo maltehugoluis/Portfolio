@@ -1,31 +1,33 @@
 /* --- BASIS UND LAYOUT --- */
 * {
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent; /* Verhindert graues Flashen auf iOS beim Klicken */
 }
 
 body, html {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  background-color: #ffffff !important;
+  width: 100%;
+  height: 100%;
 }
 
 .main-wrapper {
   width: 100vw;
   height: 100vh;
   position: relative;
-  background: #ffffff; /* Dein markantes Gelb */
+  background: #ffffff;
 }
 
 .canvas-container {
   width: 100vw;
   height: 100vh;
-  background: white;
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: relative;
+  background: #ffffff;
 }
 
-/* --- WEBSITE BRANDING (Oben Links) --- */
+/* --- WEBSITE BRANDING --- */
 .site-brand {
   position: absolute;
   top: 30px;
@@ -37,7 +39,6 @@ body, html {
   pointer-events: none;
 }
 
-/* Spezial-Klasse für das Logo im Portfolio-Header */
 .site-brand.in-header {
   position: relative !important;
   top: 0 !important;
@@ -55,85 +56,79 @@ body, html {
 }
 
 .site-subtitle {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
   font-size: 14px;
   font-weight: 700;
-  color: #000;
   letter-spacing: 4px;
-  margin-top: 5px;
   text-transform: uppercase;
+  margin-top: 5px;
 }
 
 .site-tagline {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
   font-size: 12px;
-  font-weight: 400;
-  color: #000;
   letter-spacing: 1px;
   text-transform: uppercase;
 }
 
-/* --- KAMERA DISPLAY (Drei.js Html) --- */
-.camera-screen {
-  /* Festgelegte Breite/Höhe, damit die Matrix-Berechnung stabil bleibt */
-  width: 280px; 
-  height: 180px;
+/* --- KAMERA DISPLAY (Drei.js Html PRO-FIX) --- */
+.camera-screen-pro {
+  /* Feste Dimensionen für distanceFactor Berechnung */
+  width: 320px;
+  height: 200px;
   background: #000;
   color: #fff;
   font-family: Arial, sans-serif;
-  border: 2px solid #333;
   display: flex;
   flex-direction: column;
-  pointer-events: auto;
   overflow: hidden;
-  /* Wichtig: Verhindert Unschärfe auf Retina Displays */
+  border: 1px solid #333;
+  
+  /* Apple/Safari Fixes für 3D-Rendering */
+  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+  -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
+  image-rendering: -webkit-optimize-contrast;
+  touch-action: none;
 }
 
 .os-header {
   width: 100%;
-  height: 22px;
-  background: #000;
-  font-size: 9px;
-  color: #999;
+  height: 24px;
+  background: #111;
+  font-size: 10px;
+  color: #666;
   display: flex;
-  justify-content: flex-start;
   align-items: center;
   padding: 0 10px;
   border-bottom: 1px solid #222;
-}
-
-.os-header::before {
-  content: "C";
-  background: #fff;
-  color: #000;
-  padding: 1px 4px;
-  margin-right: 10px;
-  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .os-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
-  gap: 8px;
-  padding: 10px;
+  gap: 10px;
+  padding: 12px;
   flex-grow: 1;
 }
 
 .tile {
   background: #111;
-  border: 1px solid #444;
+  border: 1px solid #333;
   color: #fff;
-  font-size: 11px;
-  font-weight: bold;
+  font-size: 14px;
+  font-weight: 900;
   cursor: pointer;
   text-transform: uppercase;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease-in-out;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
 }
 
 .tile:hover {
@@ -141,16 +136,28 @@ body, html {
   color: #000;
 }
 
-/* --- PORTFOLIO SEITE (MASONRY) --- */
+/* --- LOADER OVERLAY --- */
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(0, 0, 0, 0.1);
+  border-top: 5px solid #000;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* --- PORTFOLIO & MASONRY --- */
 .portfolio-wrapper {
   min-height: 100vh;
   background: #ffffff;
-  color: #000;
   padding: 40px 60px;
   position: relative;
   z-index: 200;
-  display: flex;
-  flex-direction: column;
   animation: slideUp 0.6s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
@@ -161,7 +168,6 @@ body, html {
   border-bottom: 3px solid #000;
   padding-bottom: 20px;
   margin-bottom: 60px;
-  width: 100%;
 }
 
 .header-left {
@@ -171,14 +177,11 @@ body, html {
 }
 
 .category-display-title {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
   font-size: 32px;
   font-weight: 300;
-  margin: 0;
-  line-height: 1;
   text-transform: uppercase;
   letter-spacing: 2px;
-  color: #000;
 }
 
 .close-button {
@@ -188,178 +191,39 @@ body, html {
   padding: 12px 24px;
   font-weight: bold;
   cursor: pointer;
-  transition: transform 0.2s;
 }
 
-.close-button:hover {
-  transform: scale(1.05);
-}
-
-/* PINTEREST-STYLE MASONRY GRID */
 .masonry-grid {
   column-count: 3;
-  column-gap: 40px; /* Breite Lücken zwischen Spalten */
-  width: 100%;
+  column-gap: 40px;
 }
 
 .grid-item {
   break-inside: avoid;
-  margin-bottom: 40px; /* Breite Lücken zwischen Bildern */
+  margin-bottom: 40px;
   position: relative;
-  transition: transform 0.3s ease;
-}
-
-.grid-item:hover {
-  transform: none; /* Kein Zoom-Effekt mehr */
+  cursor: pointer;
 }
 
 .grid-item img {
   width: 100%;
-  height: auto;
   display: block;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-}
-
-.image-overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 15px;
-  background: linear-gradient(transparent, rgba(0,0,0,0.4));
-  color: #fff;
-  opacity: 0;
-  transition: opacity 0.3s;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.grid-item:hover .image-overlay {
-  opacity: 1;
 }
 
 /* --- ANIMATIONEN --- */
 @keyframes slideUp {
-  from { opacity: 0; transform: translateY(50px); }
+  from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- RESPONSIVE ANPASSUNGEN --- */
+/* --- RESPONSIVE --- */
 @media (max-width: 1200px) {
   .masonry-grid { column-count: 2; }
 }
 
 @media (max-width: 768px) {
-  .portfolio-wrapper { padding: 20px; }
-  .header-left { gap: 20px; flex-direction: column; align-items: flex-start; }
-  .category-display-title { font-size: 24px; }
   .masonry-grid { column-count: 1; }
-  .site-logo { font-size: 36px; }
-}
-
-/* --- LIGHTBOX STYLES --- */
-.lightbox {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.95); /* Fast schwarzer Hintergrund */
-  z-index: 1000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: zoom-out;
-  animation: fadeIn 0.3s ease;
-}
-
-.lightbox img {
-  max-width: 90%;
-  max-height: 85%;
-  object-fit: contain;
-  box-shadow: 0 0 30px rgba(0,0,0,0.5);
-  cursor: default;
-  animation: zoomIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.lightbox-close {
-  position: absolute;
-  top: 30px;
-  right: 40px;
-  color: #fff;
-  font-size: 32px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.lightbox-caption {
-  position: absolute;
-  bottom: 40px;
-  color: #fff;
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
-/* Animationen für die Lightbox */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes zoomIn {
-  from { transform: scale(0.9); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-
-.camera-screen {
-  /* ... deine bisherigen Styles ... */
-  backface-visibility: hidden; /* Verhindert, dass man die Rückseite des HTML-Elements sieht */
-  transform: translateZ(1px); /* Erzwingt eine minimale Verschiebung auf der Z-Achse */
-}
-
-body, html, #root, .App, .canvas-container, .portfolio-wrapper, .portfolio-container {
-  background-color: #ffffff !important;
-  transition: background-color 0s !important;
-}
-
-* {
-  -webkit-tap-highlight-color: transparent;
-}
-
-.loader-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: #000;
-  font-family: 'Helvetica Neue', sans-serif;
-  font-weight: bold;
-}
-
-
-
-/* Spinner Animation */
-.spinner {
-  width: 40px;
-  height: 40px;
-  border: 4px solid rgba(0, 0, 0, 0.1);
-  border-left-color: #000;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* Sicherstellen, dass der Canvas-Container den Screen füllt */
-.canvas-container {
-  width: 100vw;
-  height: 100vh;
-  position: relative;
-  background-color: #ffffff;
+  .site-logo { font-size: 42px; }
+  .portfolio-wrapper { padding: 20px; }
+  .header-left { flex-direction: column; align-items: flex-start; gap: 10px; }
 }
