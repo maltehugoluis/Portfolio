@@ -10,7 +10,7 @@ export default function Camera({ onSelect }) {
       <Html
         transform
         occlude
-        position={[0.97, -0.30, 0.27]}
+        position={[0.96, -0.30, 0.27]}
         rotation={[0, Math.PI / 2, 0]}
         scale={0.23}
         zIndexRange={[100, 0]}
