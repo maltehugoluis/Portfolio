@@ -4,6 +4,13 @@ import { useGLTF, Html } from '@react-three/drei'
 export default function Camera({ onSelect }) {
   const { scene } = useGLTF('/models/camera.glb')
 
+  // Check für mobile Endgeräte
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
+  // Hier kannst du die Position für Mobile (oben) und Desktop (unten) getrennt tunen
+  const mobilePosition = [1.02, -0.30, 0.27]; // X leicht erhöht gegen Durchscheinen
+  const desktopPosition = [0.97, -0.30, 0.27];
+
   return (
     <group>
       <primitive object={scene} scale={20} />
@@ -11,12 +18,10 @@ export default function Camera({ onSelect }) {
       <Html
         transform
         occlude
-        // Wir lassen occlude weg, damit es niemals durch das Gehäuse verschwindet
-        // X=0.48 (weiter nach außen), Y=-0.40, Z=0.27
-        position={[0.97, -0.30, 0.27]} 
+        position={isMobile ? mobilePosition : desktopPosition} 
         rotation={[0.00, Math.PI / 2, 0]}
-        scale={0.23}
-        // Wichtig: Verhindert, dass das Display "flackert"
+        // Skalierung auf Mobile etwas kleiner, damit es in den Kamerarücken passt
+        scale={isMobile ? 0.18 : 0.23}
         zIndexRange={[10, 0]} 
       >
         <div className="camera-screen">
