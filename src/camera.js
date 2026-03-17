@@ -17,7 +17,7 @@ export default function Camera({ onSelect }) {
       
       <Html
         transform
-        //occlude
+        occlude
         position={isMobile ? mobilePosition : desktopPosition} 
         rotation={[0.00, Math.PI / 2, 0]}
         // Skalierung auf Mobile etwas kleiner, damit es in den Kamerarücken passt
