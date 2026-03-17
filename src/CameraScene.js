@@ -6,22 +6,23 @@ import Camera from './camera';
 export default function CameraScene({ onSelect }) {
   const controlsRef = useRef();
 
-  // Check für mobile Endgeräte (schmaler als 768px)
+  // Mobile-Check
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
   return (
     <div className="canvas-container">
-      {/* Dein Branding oben links */}
+      {/* Dein Branding */}
       <div className="site-brand">
         <div className="site-logo">MHL</div>
-        <div className="site-subtitle">INTERACTIVE</div>
-        <div className="site-tagline">PORTFOLIO</div>
+        {/* ... */}
       </div>
 
       <Canvas 
-        camera={{ position: [8, 0, 0], fov: 35 }}
-        dpr={[1, 2]} // WICHTIG: Erlaubt normale und High-Res Displays (bis zu 2x)
->
+        // WICHTIG: dpr={[1, 2]} passt die Auflösung ans Handy an
+        dpr={[1, 2]}
+        // fov: 45 auf Mobile zeigt mehr vom Raum, damit die Kamera nicht verschwindet
+        camera={{ position: [10, 0, 0], fov: isMobile ? 45 : 35 }}
+      >
         <ambientLight intensity={0.8} />
         <Environment preset="city" />
         
@@ -29,17 +30,13 @@ export default function CameraScene({ onSelect }) {
           <OrbitControls 
             ref={controlsRef} 
             enablePan={false} 
-            // ZOOM-LIMITS
             minDistance={4}   
-            maxDistance={8}   
+            maxDistance={12} // Etwas mehr Spielraum zum Zurückzoomen
           />
           
-          {/* Die Kamera wird in eine Gruppe gepackt, 
-              die nur auf Mobile runterskaliert und verschoben wird.
-          */}
           <group 
-            scale={isMobile ? 0.7 : 1} 
-            position={isMobile ? [0,89, -0.2, 0] : [0, 0, 0]}
+            scale={isMobile ? 0.6 : 1} 
+            position={isMobile ? [0, -0.5, 0] : [0, 0, 0]}
           >
             <Camera onSelect={onSelect} />
           </group>
